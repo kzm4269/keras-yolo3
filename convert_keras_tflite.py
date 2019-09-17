@@ -19,7 +19,7 @@ tf.compat.v1.logging.set_verbosity(tf.compat.v1.logging.DEBUG)
 converter = tf.lite.TFLiteConverter.from_keras_model_file('model_data/yolo.h5')
 tflite_model = converter.convert()
 
-tf.logging.set_verbosity(tf.logging.INFO)
+tf.compat.v1.logging.set_verbosity(tf.compat.v1.logging.INFO)
 converter.optimizations = [tf.lite.Optimize.DEFAULT]
 
 # 代表的なデータセット読み込み ===================================================
