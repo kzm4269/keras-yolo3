@@ -11,13 +11,17 @@ else:
 args = sys.argv
 print(args)
 os.environ["CUDA_VISIBLE_DEVICES"] = args[1]  # '-1':CPU '0':GPU-0
-dataset_root = argv[2]  # Cityscapesなどの画像データセット
+dataset_root = args[2]  # Cityscapesなどの画像データセット
 
 tf.compat.v1.enable_eager_execution()
 tf.compat.v1.logging.set_verbosity(tf.compat.v1.logging.DEBUG)
 
 converter = tf.lite.TFLiteConverter.from_keras_model_file('model_data/yolo.h5')
 tflite_model = converter.convert()
+tflite_models_dir = pathlib.Path("./")
+tflite_model_file = tflite_models_dir /"yolo3.tflite"
+tflite_model_file.write_bytes(tflite_model)
+print('Converted to TF Lite model: ' + str(tflite_model_file))
 
 tf.compat.v1.logging.set_verbosity(tf.compat.v1.logging.INFO)
 converter.optimizations = [tf.lite.Optimize.DEFAULT]
@@ -51,4 +55,5 @@ tflite_quant_model = converter.convert()
 tflite_models_dir = pathlib.Path("./")
 tflite_model_quant_file = tflite_models_dir /"integer_quant_yolo3.tflite"
 tflite_model_quant_file.write_bytes(tflite_quant_model)
+print('Quantized TF Lite model: ' + str(tflite_model_file))
 

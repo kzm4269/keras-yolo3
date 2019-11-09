@@ -106,3 +106,5 @@ ENV/
 
 # mypy
 .mypy_cache/
+/model_data/integer_quant_yolo3.tflite
+/model_data/yolo3.tflite
